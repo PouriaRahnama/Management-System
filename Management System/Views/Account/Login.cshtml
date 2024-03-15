@@ -1,0 +1,72 @@
+﻿@model LoginAccountDto
+
+@{
+    Layout = null;
+    ViewData["Title"] = "ورود به سيستم";
+}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ورود به سامانه</title>
+    <link rel="shortcut icon" type="image/png" href="~/img/logos/favicon.png" />
+    <link rel="stylesheet" href="~/css/style.main.css" />
+</head>
+
+<body>
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+         data-sidebar-position="fixed" data-header-position="fixed">
+        <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center w-100">
+                <div class="row justify-content-center w-100">
+                    <div class="col-md-8 col-lg-6 col-xxl-3">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <div style="text-align:center;">
+                                    <img src="~/img/logo.jpg" width="180" alt="">
+                                </div>
+                                <p class="text-center">سامانه مدیریت مشتریان</p>
+                                <form asp-controller="Account" method="post" asp-action="Login">
+                                    <div class="mb-3">
+                                        <label asp-for="UserName" class="form-label">نام کاربری</label>
+                                        <input asp-for="UserName" type="text" class="form-control">
+                                        <span asp-validation-for="UserName"></span>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label asp-for="Password" class="form-label">رمز عبور</label>
+                                        <input asp-for="Password" type="password" class="form-control">
+                                        <span asp-validation-for="Password"></span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                        <div class="form-check">
+                                            <label class="form-check-label text-dark" asp-for="RememberMe">
+                                                مرابخاطر بسپار
+                                            </label>
+                                            <input class="form-check-input primary" type="checkbox" value="" asp-for="RememberMe">
+                                        </div>
+                                    </div>
+                                    @if (ViewData["ErrorMessage"]!=null)
+                                    {
+                                        <span>@ViewData["ErrorMessage"]</span>
+                                    }
+                                    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">ورود به سامانه</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/js/jquery/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+
+</html>

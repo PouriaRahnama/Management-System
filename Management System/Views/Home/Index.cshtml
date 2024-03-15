@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewData["Title"] = "پرتال اصلي";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">داشبورد مدیریتی</h1>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5 class="card-title fw-semibold mb-4">مشتریان</h5>
+                        <div class="card">
+                            <img src="~/img/Units/folder-customer-icon.png" class="card-img-top" alt="پنل مشتریان">
+                            <div class="card-body">
+                                <a asp-controller="Customer" asp-action="Index" class="btn btn-outline-primary m-1">مشاهده لیست</a>
+                                <br />
+                                <a asp-controller="Customer" asp-action="Create" class="btn btn-outline-warning m-1">مشتری جدید</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="card-title fw-semibold mb-4">مخاطبین</h5>
+                        <div class="card">
+                            <img src="~/img/Units/folder-contact-icon.svg.png" class="card-img-top" alt="پنل مخاطبین">
+                            <div class="card-body">
+                                <a asp-controller="Contact" asp-action="Index" class="btn btn-outline-primary m-1">مشاهده لیست</a>
+                                <br />
+                                <a asp-controller="Contact" asp-action="AddContact" class="btn btn-outline-warning m-1">مخاطب جدید</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="card-title fw-semibold mb-4">محصولات</h5>
+                        <div class="card">
+                            <img src="~/img/Units/folder-Products-icon.webp" class="card-img-top" alt="پنل محصولات">
+                            <div class="card-body">
+                                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary m-1">مشاهده محصولات</a>
+                                <br />
+                                <a asp-controller="Product" asp-action="Create" class="btn btn-outline-warning m-1">محصول جدید</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="card-title fw-semibold mb-4">سفارشات</h5>
+                        <div class="card">
+                            <img src="~/img/Units/folder-order-icon.png" class="card-img-top" alt="پنل سفارشات">
+                            <div class="card-body">
+                                <a asp-controller="Order" asp-action="Index" class="btn btn-outline-primary m-1">مشاهده لیست</a>
+                                <br />
+                                <a asp-controller="Order" asp-action="Create" class="btn btn-outline-warning m-1">سفارش جدید</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        @if (TempData["Success"] != null)
+                        {
+                            <span>@TempData["Success"]</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

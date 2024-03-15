@@ -1,0 +1,84 @@
+﻿@model IEnumerable<CustomerDto>
+@{
+    ViewData["Title"] = "ليست مشتريان";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">مدیریت مشتریان</h1>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="card-body p-4" style="text-align:right">
+                        <a asp-action="Create" class="btn btn-outline-primary m-1">ایجاد حساب جدید</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <table>
+                        <thead class="card-title fw-semibold mb-4">
+                            <tr>
+                                <td>نام مشتری</td>
+                                <td>استان</td>
+                                <td>شهر</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        @item.Province
+                                    </td>
+                                    <td>
+                                        @item.City
+                                    </td>
+                                    <td style="width: 23% !important;">
+                                        <button type="button" class="btn btn-info m-1">
+                                            <a asp-controller="Customer" asp-action="Detail" asp-route-Id="@item.Id" style="text-decoration:none;color:white">
+                                                مشاهده جزئیات
+                                            </a>
+                                        </button>
+                                    </td>
+@*                                     <td>
+                                        <button type="button" class="btn btn-info m-1">
+                                            <a asp-controller="Contact" asp-action="AddContact" asp-route-Id="@item.Id" style="text-decoration:none;color:white">
+                                                افزودن مخاطب
+                                            </a>
+                                        </button>
+                                    </td> *@
+                                    <td>
+                                        <button type="button" class="btn btn-success m-1">
+                                            <a asp-action="Detail" asp-route-Id="@item.Id" style="text-decoration:none;color:white">
+                                                ویرایش
+                                            </a>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <form asp-action="Delete" asp-route-Id="@item.Id" method="post">
+                                            <button type="submit" class="btn btn-danger m-1">حذف</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

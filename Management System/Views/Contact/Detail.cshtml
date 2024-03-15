@@ -1,0 +1,89 @@
+﻿
+@model ContactDto
+@{
+    ViewData["Title"] = "پروفايل مخاطب";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">پروفايل مخاطب</h1>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body" style="text-align:right">
+                    <h5 class="card-title fw-semibold mb-4">اطلاعات مخاطب</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form asp-action="Edit" asp-route-Id="@Model.Id" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="FirstName" class="form-label">نام مخاطب</label>
+                                        <input type="text" asp-for="FirstName" value="@Model.FirstName" class="form-control">
+                                        <span asp-validation-for="FirstName"></span>
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="LastName" class="form-label">نام خانوادگی</label>
+                                        <input type="text" asp-for="LastName" value="@Model.LastName" class="form-control">
+                                        <span asp-validation-for="LastName"></span>
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="Role" class="form-label">سمت </label>
+                                        <input type="text" asp-for="Role" value="@Model.Role" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-4">
+                                        <label class="form-label">جنسیت :</label>
+                                        <br />
+                                        @if (@Model.Gender == true)
+                                        {
+                                            <span>
+                                                آقا
+                                                <input type="radio" name="GenderName" value="1" checked />
+                                            </span>
+                                            <span>
+                                                خانم
+                                                <input type="radio" name="GenderName" value="0" />
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span>
+                                                آقا
+                                                <input type="radio" name="GenderName" value="1" />
+                                            </span>
+                                            <span>
+                                                خانم
+                                                <input type="radio" name="GenderName" value="0" checked />
+                                            </span>
+                                        }
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="Phone" class="form-label">تلفن</label>
+                                        <input value="@Model.Phone" type="text" asp-for="Phone" class="disabledTextInput form-control">
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="LocalNumber" class="form-label">شماره داخلی </label>
+                                        <input type="text" value="@Model.LocalNumber" asp-for="LocalNumber" class="disabledTextInput form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="Mobile" class="form-label">موبایل</label>
+                                        <input type="text" value="@Model.Mobile" asp-for="Mobile" class="disabledTextInput form-control">
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="Email" class="form-label">ایمیل</label>
+                                        <input type="text" value="@Model.Email" asp-for="Email" class="disabledTextInput form-control">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary m-1">ثبت</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

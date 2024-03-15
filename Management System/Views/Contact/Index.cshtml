@@ -1,0 +1,83 @@
+﻿@using Management_System.Models.Dtos
+@model IEnumerable<ContactDto>
+@{
+    ViewData["Title"] = "ليست مخاطبين";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">مدیریت مخاطبین</h1>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="card-body p-4" style="text-align:right">
+                        <a asp-action="AddContact" class="btn btn-outline-primary m-1">ایجاد مخاطب جديد</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <table>
+                        <thead class="card-title fw-semibold mb-4">
+                            <tr>
+                                <td>جنسيت</td>
+                                <td>نام</td>
+                                <td>نام خانوادگي</td>
+                                <td>سمت</td>
+                                <td>تلفن</td>
+                                <td>داخلي</td>
+                                <td>موبايل</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.GenderString
+                                    </td>
+                                    <td>
+                                        @item.FirstName
+                                    </td>
+                                    <td>
+                                        @item.LastName
+                                    </td>
+                                    <td>
+                                        @item.Role
+                                    </td>
+                                    <td>
+                                        @item.Phone
+                                    </td>
+                                    <td>
+                                        @item.LocalNumber
+                                    </td>
+                                    <td>
+                                        @item.Mobile
+                                    </td>
+                                    <td>
+                                        <a asp-action="Detail" asp-route-Id="@item.Id" style="text-decoration:none;color:white">
+                                            ویرایش
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form asp-action="Delete" asp-route-Id="@item.Id" method="post">
+                                            <button type="submit" class="btn btn-danger m-1">حذف</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

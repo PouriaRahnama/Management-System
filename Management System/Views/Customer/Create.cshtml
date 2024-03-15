@@ -1,0 +1,54 @@
+﻿@model AddCustomerDto
+@{
+    ViewData["Title"] = "ايجاد حساب جديد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">افتتاح حساب جدید</h1>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body" style="text-align:right">
+                    <h5 class="card-title fw-semibold mb-4">اطلاعات مشتری</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="frm" method="post">
+                                <div class="row">
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="Name" class="form-label">نام مشتری</label>
+                                        <input type="text" asp-for="Name" class="disabledTextInput form-control" id="txtName">
+                                        <span asp-validation-for="Name"></span>
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="Province" class="form-label">استان</label>
+                                        <input type="text" asp-for="Province" class="disabledTextInput form-control" id="txtProvince">
+                                        <span asp-validation-for="Province"></span>
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="City" class="form-label">شهرستان</label>
+                                        <input type="text" asp-for="City" class="disabledTextInput form-control" id="txtCity">
+                                        <span asp-validation-for="City"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3  col-6">
+                                        <label asp-for="Address" class="form-label">آدرس مشتری</label>
+                                        <textarea asp-for="Address" class="disabledTextInput form-control" id="txtAddress"></textarea>
+                                        <span asp-validation-for="Address"></span>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label asp-for="Description" class="form-label">توضیحات</label>
+                                        <textarea asp-for="Description" class=" disabledTextInput form-control" id="txtDescription"></textarea>
+                                        <span asp-validation-for="Description"></span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary m-1">ثبت حساب</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

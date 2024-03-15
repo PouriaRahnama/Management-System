@@ -1,0 +1,120 @@
+﻿@model OrderDto
+@{
+    ViewData["Title"] = "اطلاعات سفارش";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>اطلاعات سفارش</h1>
+<div class="text-center">
+    <h1 class="display-4">اطلاعات سفارش</h1>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body" style="text-align:right">
+                    <h5 class="card-title fw-semibold mb-4">اطلاعات مشتری</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <fieldset disabled="">
+                                    <div class="row">
+                                        <div class="mb-3 col-4">
+                                            <label asp-for="@Model.Customer.Name" class="form-label">نام مشتری</label>
+                                            <input class="form-control" asp-for="@Model.Customer.Name" />
+                                        </div>
+                                        <div class="mb-3 col-4">
+                                            <label asp-for="@Model.Customer.Province" class="form-label">استان</label>
+                                            <input class="form-control" asp-for="@Model.Customer.Province" />
+                                        </div>
+                                        <div class="mb-3 col-4">
+                                            <label asp-for="@Model.Customer.City" class="form-label">شهر</label>
+                                            <input class="form-control" asp-for="@Model.Customer.City" />
+                                        </div>
+                                        <div class="mb-3 col-8">
+                                            <label asp-for="@Model.Customer.Description" class="form-label">توضیحات سفارش</label>
+                                            <input class="form-control" asp-for="@Model.Customer.Description" />
+                                        </div>
+                                        <div class="mb-3 col-4">
+                                            <label asp-for="@Model.CreateDate" class="form-label">تاریخ ثبت سفارش</label>
+                                            <input class="form-control" asp-for="@Model.CreateDate" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-body" style="text-align:right">
+                    <h5 class="card-title fw-semibold mb-4">محصولات</h5>
+                    <div class="card">
+                        @if (Model.Items != null)
+                        {
+                            <table class="m-3">
+                                <thead style="font-size:18px">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>نام محصول</th>
+                                        <th>تعداد</th>
+                                        <th>توضیحات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var prod in Model.Items)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <form method="post" asp-action="DeleteItem" asp-route-OrderId="@Model.Id" asp-route-ItemId="@prod.Id">
+                                                    <button type="submit" title="حذف آیتم" class="btn btn-danger m-1"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-x-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2l.324 .001l.318 .004l.616 .017l.299 .013l.579 .034l.553 .046c4.785 .464 6.732 2.411 7.196 7.196l.046 .553l.034 .579c.005 .098 .01 .198 .013 .299l.017 .616l.005 .642l-.005 .642l-.017 .616l-.013 .299l-.034 .579l-.046 .553c-.464 4.785 -2.411 6.732 -7.196 7.196l-.553 .046l-.579 .034c-.098 .005 -.198 .01 -.299 .013l-.616 .017l-.642 .005l-.642 -.005l-.616 -.017l-.299 -.013l-.579 -.034l-.553 -.046c-4.785 -.464 -6.732 -2.411 -7.196 -7.196l-.046 -.553l-.034 -.579a28.058 28.058 0 0 1 -.013 -.299l-.017 -.616c-.003 -.21 -.005 -.424 -.005 -.642l.001 -.324l.004 -.318l.017 -.616l.013 -.299l.034 -.579l.046 -.553c.464 -4.785 2.411 -6.732 7.196 -7.196l.553 -.046l.579 -.034c.098 -.005 .198 -.01 .299 -.013l.616 -.017c.21 -.003 .424 -.005 .642 -.005zm-1.489 7.14a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" fill="currentColor" stroke-width="0"/></svg></button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form method="post" asp-action="DiminishItem" asp-route-OrderId="@Model.Id" asp-route-ItemId="@prod.Id">
+                                                    <button type="submit" title="کاهش تعداد محصول" class="btn btn-danger m-1"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0"/></svg></button>
+
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form method="post" asp-action="UpdateCountItem" asp-route-OrderId="@Model.Id" asp-route-ProductId="@prod.ProductId">
+                                                    <button type="submit" title="افزایش تعداد آیتم آیتم" class="btn btn-success m-1"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg></button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                @prod.Product.Name
+                                            </td>
+                                            <td>
+                                                @prod.Quantity
+                                            </td>
+                                            <td>
+                                                @prod.Description
+                                            </td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        <div class="card-body m-2" style="text-align:right">
+                            <h5>افزودن محصول</h5>
+                            <br/>
+                            <form method="post" asp-action="Update" asp-route-OrderId="@Model.Id">
+                                <div class="row">
+                                    <div class="mb-3 col-4">
+                                        @if (ViewBag.Products != null)
+                                        {
+                                            @Html.DropDownList("Products", @ViewBag.Products, "انتخاب محصول", new { @class = "form-select", @style = "width:300px" })
+                                        }
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success m-1">افزودن</button>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

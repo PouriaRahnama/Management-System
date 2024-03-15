@@ -1,0 +1,53 @@
+﻿@model AddAccountDto
+@{
+    ViewData["Title"] = "ثبت کاربر سیستمی";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">تعریف کاربر جدید</h1>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body" style="text-align:right">
+                    <h5 class="card-title fw-semibold mb-4">اطلاعات کاربر</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" asp-action="Register">
+                                <div class="row">
+                                    <div class="mb-3 col-3">
+                                        <label asp-for="UserName" class="form-label">نام کاربری</label>
+                                        <input type="text" asp-for="UserName" class="form-control">
+                                        <span asp-validation-for="UserName"></span>
+                                    </div>
+                                    <div class="mb-3 col-3">
+                                        <label asp-for="Email" class="form-label">ایمیل</label>
+                                        <input type="text" asp-for="Email" class="form-control">
+                                        <span asp-validation-for="Email"></span>
+                                    </div>
+                                    <div class="mb-3 col-3">
+                                        <label asp-for="Password" class="form-label">رمز عبور</label>
+                                        <input type="text" asp-for="Password" class="form-control">
+                                        <span asp-validation-for="Password"></span>
+                                    </div>
+                                    <div class="mb-3 col-3">
+                                        <label asp-for="ConfrimPassword" class="form-label">تکرار رمز عبور</label>
+                                        <input type="text" asp-for="ConfrimPassword" class="form-control">
+                                        <span asp-validation-for="ConfrimPassword"></span>
+                                    </div>
+                                    <div>
+                                        @if (ViewData["ErrorMessage"] != null)
+                                        {
+                                            <span>@ViewData["ErrorMessage"]</span>
+                                        }
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary m-1">ثبت</button>
+                            </form>
+                        </div>             
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

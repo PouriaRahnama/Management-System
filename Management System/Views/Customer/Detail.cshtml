@@ -1,0 +1,175 @@
+﻿@using Management_System.ConfigApp
+@model CustomerDetailDto
+@{
+    ViewData["Title"] = "پروفايل مشتري";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">جزئیات حساب : @Model.Name</h1>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body" style="text-align:right">
+                    <h5 class="card-title fw-semibold mb-4">اطلاعات مشتری</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form asp-action="EditCustomer" asp-route-Id="@Model.Id" method="post">
+                                <div class="row">
+                                    <div class="mb-3 col-4">
+                                        <label for="name" class="form-label">نام مشتری</label>
+                                        <input type="text" asp-for="Name" value="@Model.Name" class="disabledTextInput form-control" id="txtName">
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label for="Province" class="form-label">استان</label>
+                                        <input type="text" asp-for="Province" value="@Model.Province" class="disabledTextInput form-control" id="txtProvince">
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label for="City" class="form-label">شهرستان</label>
+                                        <input type="text" asp-for="City" value="@Model.City" class="disabledTextInput form-control" id="txtCity">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-6">
+                                        <label for="Address" class="form-label">آدرس مشتری</label>
+                                        <textarea asp-for="Address" class="disabledTextInput form-control" id="txtAddress">@Model.Address</textarea>
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="Description" class="form-label">توضیحات</label>
+                                        <textarea asp-for="Description" class=" disabledTextInput form-control" id="txtDescription">@Model.Description</textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary m-1">ویرایش حساب</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body" style="text-align:right">
+                    <h5 class="card-title fw-semibold mb-4">اطلاعات مخاطبین</h5>
+                    <table width="100%">
+                        <thead class="card-title fw-semibold mb-4">
+                            <tr>
+                                <th>
+                                    جنسیت
+                                </th>
+                                <th>
+                                    نام
+                                </th>
+                                <th>
+                                    نام خانوادگی
+                                </th>
+                                <th>
+                                    سمت
+                                </th>
+                                <th>
+                                    تلفن
+                                </th>
+                                <th>
+                                    داخلی
+                                </th>
+                                <th>
+                                    موبایل
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Contacts)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.GenderString
+                                    </td>
+                                    <td>
+                                        @item.FirstName
+                                    </td>
+                                    <td>
+                                        @item.LastName
+                                    </td>
+                                    <td>
+                                        @item.Role
+                                    </td>
+                                    <td>
+                                        @item.Phone
+                                    </td>
+                                    <td>
+                                        @item.LocalNumber
+                                    </td>
+                                    <td>
+                                        @item.Mobile
+                                    </td>
+
+                                    <td>
+                                        <a asp-controller="Contact" asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-outline-success m-1">ويرايش</a>
+                                    </td>
+                                    <td>
+                                        <form asp-controller="Customer" method="post" asp-action="DeleteContactCustomer" asp-route-CustomerId="@Model.Id" asp-route-ContactId="@item.Id">
+                                            <button class="btn btn-outline-danger m-1">حذف</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-body" style="text-align:right">
+                    <form method="post" asp-action="AddContact" asp-route-CustomerId="@Model.Id">
+                        @Html.DropDownList("Contacts", @ViewBag.Contacts,"انتخاب", new { @class = "form-select", @style = "width:300px" })
+                        <br/>
+                        <input type="submit" class="btn btn-primary m-1" value="افزودن"/>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body" style="text-align:right">
+                    <h5 class="card-title fw-semibold mb-4">اطلاعات سفارش</h5>
+                    <table width="100%">
+                        <thead class="card-title fw-semibold mb-4">
+                            <tr>
+                                <th>
+                                    نام محصول
+                                </th>
+                                <th>
+                                    توضیحات
+                                </th>
+                                <th>
+                                    تاریخ ثبت
+                                </th>
+                                <th>
+                                    تاریخ انقضاء
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Orders)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @item.ProductName
+                                    </td>
+                                    <td>
+                                        @item.ItemDescription
+                                    </td>
+                                    <td>
+                                        @item.CreateAt.ToPersian()
+                                    </td>
+                                    <td>
+                                        @item.ExpireAt.ToPersian()
+                                    </td>
+                          
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

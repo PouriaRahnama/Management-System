@@ -1,0 +1,46 @@
+﻿@model AddItemDto
+@{
+    ViewData["Title"] = "ثبت سفارش جدید";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">سفارش جدید</h1>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body" style="text-align:right">
+                    <h5 class="card-title fw-semibold mb-4">اطلاعات سفارش</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" asp-action="Create">
+                                <div class="row">
+                                    <div class="mb-3 col-4">
+                                        <label class="form-label">نام مشتری</label>
+                                        @Html.DropDownList("Customers",@ViewBag.Customers,"انتخاب مشتری",new {@class = "form-select"})
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label  class="form-label">انتخاب محصول</label>
+                                        @Html.DropDownList("Products",@ViewBag.Products,"انتخاب محصول",new {@class = "form-select"})
+
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="Quantity"  class="form-label">تعداد محصول</label>
+                                        <input class="form-control" asp-for="Quantity" />
+                                    </div>
+                                    <div class="mb-3 col-8">
+                                        <label asp-for="Description"  class="form-label">توضیحات آیتم</label>
+                                        <input class="form-control" asp-for="Description" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary m-1">ثبت حساب</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

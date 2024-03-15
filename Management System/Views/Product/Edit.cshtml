@@ -1,0 +1,42 @@
+﻿@model EditProductDto
+@{
+    ViewData["Title"] = "جزئيات محصول";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">جزئیات محصول</h1>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body" style="text-align:right">
+                    <h5 class="card-title fw-semibold mb-4">اطلاعات محصول</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" asp-action="EditProduct" asp-route-Id="@Model.Id" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="Name" class="form-label">نام محصول</label>
+                                        <input type="text" asp-for="Name" value="@Model.Name" class="disabledTextInput form-control">
+                                        <span asp-validation-for="Name"></span>
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="Description" class="form-label">توضیح محصول</label>
+                                        <textarea type="text" asp-for="Description" value="@Model.Description" rows="5" cols="15" class="disabledTextInput form-control"></textarea>
+
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label asp-for="ImageFile" class="form-label">تصویر محصول</label>
+                                        <input type="file" asp-for="ImageFile" class="disabledTextInput form-control">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary m-1">ثبت</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,74 @@
+﻿@using Management_System.ConfigApp
+@model IEnumerable<ProductDto>
+@{
+    ViewData["Title"] = "محصولات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">مدیریت محصولات</h1>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="card-body p-4" style="text-align:right">
+                        <a asp-controller="Product" asp-action="Create" class="btn btn-outline-primary m-1">محصول جدید</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <table>
+                        <thead class="card-title fw-semibold mb-4">
+                            <tr>
+                                <td>تصویر محصول</td>
+                                <td>نام محصول</td>
+                                <td>توضیحات</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Any() == true)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="/img/ProductImg/@item.ImageAddress" alt="No Set Image" style="border-radius: 10px" height="61px" width="50" />
+
+                                          
+                                        </td>
+                                        <td>
+                                            @item.Name
+                                        </td>
+                                        <td>
+                                            @item.Description.ConvertHtmlToText().SubStringCustom(30)
+                                        </td>
+                                        <td>
+                                            <a asp-action="Detail" asp-route-Id="@item.Id" type="button" class="btn btn-primary m-1">جزئیات محصول</a>
+                                        </td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-Id="@item.Id" type="button" class="btn btn-success m-1">ویرایش</a>
+                                        </td>
+                                        <td>
+                                            <form method="post" asp-action="DeleteProduct" asp-route-Id="@item.Id">
+                                                <button type="submit" class="btn btn-danger m-1">حذف محصول</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
