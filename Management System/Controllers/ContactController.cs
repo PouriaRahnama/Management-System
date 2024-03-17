@@ -95,8 +95,8 @@ namespace Management_System.Controllers
                 logger.LogError(ex.Message);
             }
 
-            string returnBack = Request.Headers["Referer"].ToString();
-            return Redirect(returnBack);
+
+            return RedirectToAction("Index");
         }
 
         #endregion

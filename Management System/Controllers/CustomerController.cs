@@ -1,5 +1,6 @@
 ﻿using Management_System.Models.Dtos;
 using Management_System.Services;
+using Microsoft.Build.Framework;
 
 namespace Management_System.Controllers
 {
@@ -87,6 +88,7 @@ namespace Management_System.Controllers
         {
             if (!ModelState.IsValid)
                 return View(customerDto);
+
             CustomerDto customer = new CustomerDto();
             try
             {
@@ -122,8 +124,7 @@ namespace Management_System.Controllers
         public async Task<IActionResult> DeleteContactCustomer(Guid CustomerId, Guid ContactId)
         {
             await customerService.DeleteContactCustomerAsync(CustomerId, ContactId);
-            string returnBack = Request.Headers["Referer"].ToString();
-            return Redirect(returnBack);
+            return RedirectToAction("Detail", new { Id = CustomerId });
         }
 
         #endregion
