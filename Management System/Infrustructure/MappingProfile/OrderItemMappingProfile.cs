@@ -9,7 +9,6 @@ namespace Management_System.Infrustructure.MappingProfile
         {
             CreateMap<OrderItemDto, OrderItem>().ReverseMap();
             CreateMap<AddItemDto, OrderItem>().ReverseMap();
-            CreateMap<EditItemDto, OrderItem>().ReverseMap();
             CreateMap<Order, OrderDetailDto>().ReverseMap();
         }
     }

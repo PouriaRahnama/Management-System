@@ -10,7 +10,6 @@ namespace Management_System.Infrustructure.MappingProfile
             CreateMap<ProductDto, Product>().ReverseMap();
             CreateMap<AddProductDto, Product>().ReverseMap();
             CreateMap<EditProductDto, Product>().ReverseMap();
-            CreateMap<PathProductDto, Product>().ReverseMap();
             CreateMap<SearchFilterProductDto, Product>().ReverseMap();
         }
     }

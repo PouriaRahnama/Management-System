@@ -12,9 +12,7 @@ namespace Management_System.Infrustructure.MappingProfile
             CreateMap<CustomerDetailDto, Customer>().ReverseMap();
             CreateMap<AddCustomerDto, Customer>().ReverseMap();
             CreateMap<EditContactDto, Customer>().ReverseMap();
-            CreateMap<PatchCustomerDto, Customer>().ReverseMap();
             CreateMap<SearchFilterContactDto, Customer>().ReverseMap();
-            CreateMap<ContactsofCustomer, Customer>().ReverseMap();
         }
     }
 }
