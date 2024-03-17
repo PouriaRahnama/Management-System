@@ -70,6 +70,12 @@ namespace Management_System.Services
             var contact = await context.Contacts.FirstOrDefaultAsync(p => p.Id == ContactId);
             var customer = await context.Customers.FirstOrDefaultAsync(p => p.Id == CustomerId);
 
+            var contactCustomer = new ContactCustomer()
+            {
+                ContactId = contact.Id,
+                CustomerId = customer.Id
+            };
+            context.ContactCustomers.Add(contactCustomer);
             await context.SaveChangesAsync();
         }
         #endregion
@@ -116,7 +122,7 @@ namespace Management_System.Services
             var customer = await context.Customers.FirstOrDefaultAsync(p => p.Id == CustomerId);
             var contact = await context.Contacts.FirstOrDefaultAsync(p => p.Id == ContactId);
 
-            await context.ContactCustomers.AddAsync(new ContactCustomer()
+            context.ContactCustomers.Remove(new ContactCustomer()
             {
                 ContactId = contact.Id,
                 CustomerId = customer.Id

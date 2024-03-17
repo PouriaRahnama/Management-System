@@ -104,6 +104,7 @@ namespace Management_System.Services
             }
 
             puterContext.Put(product, editProductDto);
+             context.Products.Update(product);
             await context.SaveChangesAsync();
 
             return mapper.Map<ProductDto>(product);
@@ -123,7 +124,7 @@ namespace Management_System.Services
             //    }
             //}
             #endregion
-
+            context.Products.Update(product);
             await context.SaveChangesAsync();
         }
         #endregion

@@ -13,7 +13,6 @@ namespace Management_System.Models.Dtos
 
         public virtual List<OrderItemDto> Items { get; set; }
 
-        //Navigation Properties
         public virtual CustomerDto Customer { get; set; }
     }
 

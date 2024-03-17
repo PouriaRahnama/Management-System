@@ -47,7 +47,7 @@
                                             @item.Name
                                         </td>
                                         <td>
-                                            @item.Description.ConvertHtmlToText().SubStringCustom(30)
+                                            @item.Description?.ConvertHtmlToText().SubStringCustom(30)
                                         </td>
                                         <td>
                                             <a asp-action="Detail" asp-route-Id="@item.Id" type="button" class="btn btn-primary m-1">جزئیات محصول</a>
