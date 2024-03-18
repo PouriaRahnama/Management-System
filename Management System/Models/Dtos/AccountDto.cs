@@ -1,5 +1,20 @@
 ﻿namespace Management_System.Models.Dtos
 {
+    public class AccountDto
+    {
+        [Display(Name = "نام کاربری")]
+        public required string Id { get; set; }
+
+        [Display(Name = "نام کاربری")]
+        public required string UserName { get; set; }
+
+        [Display(Name = "ایمیل")]
+        public required string Email { get; set; }
+
+        [Display(Name = "نقش")]
+        public string? RoleName { get; set; }
+
+    }
     public class AddAccountDto
     {
         [Required(ErrorMessage = "الزامی است .")]

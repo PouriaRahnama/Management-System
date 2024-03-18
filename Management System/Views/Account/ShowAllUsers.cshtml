@@ -1,0 +1,73 @@
+﻿@using Management_System.ConfigApp
+@model IEnumerable<AccountDto>
+@{
+    ViewData["Title"] = "کاربران";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">مدیریت محصولات</h1>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="card-body p-4" style="text-align:right">
+                        <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary m-1"> کاربر جدید</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <table>
+                        <thead class="card-title fw-semibold mb-4">
+                            <tr>
+                                <td>نام کاربری</td>
+                                <td>ایمیل</td>
+                                <td>نقش کاربر</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Any() == true)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.UserName
+                                        </td>
+                                        <td>
+                                            @item.Email
+                                        </td>
+                                        <td>
+                                            @item.RoleName
+                                        </td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-Id="@item.Id" type="button" class="btn btn-success m-1">ویرایش</a>
+                                        </td>
+                                        <td>
+                                            <form method="post" asp-action="DeleteProduct" asp-route-Id="@item.Id">
+                                                <button type="submit" class="btn btn-danger m-1">حذف کاربر</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}

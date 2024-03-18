@@ -1,5 +1,6 @@
 ﻿using Management_System.Models.Dtos;
 using Management_System.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Management_System.Controllers
@@ -20,12 +21,13 @@ namespace Management_System.Controllers
         #endregion
 
         #region Add
-        //[Authorize]
+        [Authorize]
         public IActionResult Register()
         {
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Register(AddAccountDto addAccountDto)
         {
@@ -43,11 +45,9 @@ namespace Management_System.Controllers
             TempData["SuccessMessage"] = "ساخت اکانت با موفقیت انجام پذیرفت.";
             return RedirectToAction("Index", "Home");
         }
-
         #endregion
 
         #region Login
-
         public IActionResult Login()
         {
             var result = accountService.CheckSignIn(User);
@@ -58,6 +58,7 @@ namespace Management_System.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Login(LoginAccountDto loginAccountDto)
         {
@@ -85,13 +86,21 @@ namespace Management_System.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<RedirectToActionResult> Logout()
         {
             await accountService.SignOut();
             return RedirectToAction("Login");
         }
-
         #endregion
+
+        [Authorize]
+        public async Task<IActionResult> ShowAllUsers()
+        {
+            var users = await accountService.GetAllUsers();
+            return View(users);
+        }
+
     }
 }

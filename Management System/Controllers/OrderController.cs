@@ -1,9 +1,11 @@
 ﻿using Management_System.Models.Dtos;
 using Management_System.Services;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Management_System.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         #region Constructor

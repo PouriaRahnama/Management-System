@@ -1,10 +1,11 @@
 ﻿using Management_System.Models.Dtos;
 using Management_System.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Management_System.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ContactController : Controller
     {
         #region Constructor

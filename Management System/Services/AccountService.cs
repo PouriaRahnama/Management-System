@@ -9,6 +9,7 @@ namespace Management_System.Services
         Task<StatusResultDto> SignIn(LoginAccountDto loginAccountDto);
         StatusResultDto CheckSignIn(ClaimsPrincipal principal);
         Task SignOut();
+        Task<IEnumerable<AccountDto>> GetAllUsers();
     }
 
     [EasyDi(ServiceLifetime.Scoped)]
@@ -38,26 +39,52 @@ namespace Management_System.Services
 
             return StatusResultDto.Success;
         }
+
         public async Task<StatusResultDto> SignIn(LoginAccountDto loginAccountDto)
         {
             var signIn = await signInManager.PasswordSignInAsync(loginAccountDto.UserName, loginAccountDto.Password,
-                loginAccountDto.RememberMe, true);
-            if (signIn.IsLockedOut)
-                return StatusResultDto.Success;
+                loginAccountDto.RememberMe, false);
             if (!signIn.Succeeded)
                 return StatusResultDto.Failure;
 
             return StatusResultDto.Success;
         }
+
         public StatusResultDto CheckSignIn(ClaimsPrincipal principal)
         {
             var status = signInManager.IsSignedIn(principal);
             if (!status) return StatusResultDto.NotEntred;
             return StatusResultDto.Entred;
         }
+
         public async Task SignOut()
         {
             await signInManager.SignOutAsync();
+        }
+
+
+        [Display(Name = "لیست کلیه کاربران")]
+        public async Task<IEnumerable<AccountDto>> GetAllUsers()
+        {
+            var userWithRoles = new List<AccountDto>();
+            var users = await userManager.Users.ToListAsync();
+            foreach (var user in users)
+            {
+                var roles = await userManager.GetRolesAsync(user);
+
+                AccountDto uInfo = new()
+                {
+                    UserName = user.UserName!,
+                    Email = user.Email!,
+                    Id = user.Id
+                };
+                foreach (var role in roles)
+                {
+                    uInfo.RoleName += $" {role}";
+                }
+                userWithRoles.Add(uInfo);
+            }
+            return userWithRoles;
         }
     }
 }

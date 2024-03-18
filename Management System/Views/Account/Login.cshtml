@@ -31,6 +31,7 @@
                                 </div>
                                 <p class="text-center">سامانه مدیریت مشتریان</p>
                                 <form asp-controller="Account" method="post" asp-action="Login">
+                                    @Html.AntiForgeryToken()
                                     <div class="mb-3">
                                         <label asp-for="UserName" class="form-label">نام کاربری</label>
                                         <input asp-for="UserName" type="text" class="form-control">
@@ -46,7 +47,7 @@
                                             <label class="form-check-label text-dark" asp-for="RememberMe">
                                                 مرابخاطر بسپار
                                             </label>
-                                            <input class="form-check-input primary" type="checkbox" value="" asp-for="RememberMe">
+                                            <input class="form-check-input primary" type="checkbox" value="True" asp-for="RememberMe">
                                         </div>
                                     </div>
                                     @if (ViewData["ErrorMessage"]!=null)
