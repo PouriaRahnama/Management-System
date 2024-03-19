@@ -18,10 +18,20 @@ builder.Services.AddDbContextPool<MainContext>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MainContext>()
     .AddDefaultTokenProviders();
 
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("Admin_Access",
+//        policy => policy.RequireClaim("AdminAccess"));
+//});
+
 builder.Services.AddScoped<IDbinitializer, DbInitializer>();
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();

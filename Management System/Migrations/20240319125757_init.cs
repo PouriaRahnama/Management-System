@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Management_System.Migrations
 {
     /// <inheritdoc />
@@ -295,19 +297,28 @@ namespace Management_System.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "059f213c211f4865bdf2bd4986a68df3", null, "User", "USER" },
+                    { "5e158bd69a2847b5a6e42073f21c9485", null, "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Contacts",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "Email", "FirstName", "Gender", "IsDeleted", "LastName", "LocalNumber", "Mobile", "Phone", "Role", "UpdatedAt" },
-                values: new object[] { new Guid("eb371863-0915-481a-8873-9ebeddf8039a"), new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(764), null, "test@gmail.com", "ali", true, false, "norozi", "123", " 09132884969", "03137820975", "Admin", new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(766) });
+                values: new object[] { new Guid("eb371863-0915-481a-8873-9ebeddf8039a"), new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1381), null, "test@gmail.com", "ali", true, false, "norozi", "123", " 09132884969", "03137820975", "Admin", new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1381) });
 
             migrationBuilder.InsertData(
                 table: "Customers",
                 columns: new[] { "Id", "Address", "City", "CreatedAt", "DeletedAt", "Description", "IsDeleted", "Name", "Province", "UpdatedAt" },
-                values: new object[] { new Guid("57ba4c5e-98c1-4ddd-e316-08dc2111c64f"), "isfahan", "isfahan", new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(609), null, "good person", false, "pouria", "isfahan", new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(611) });
+                values: new object[] { new Guid("57ba4c5e-98c1-4ddd-e316-08dc2111c64f"), "isfahan", "isfahan", new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1270), null, "good person", false, "pouria", "isfahan", new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1271) });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "Description", "ImageAddress", "IsDeleted", "Name", "UpdatedAt" },
-                values: new object[] { new Guid("c5bf1327-7e2e-436c-ae93-08dc21125efe"), new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(266), null, "گوشی موبایل اپل مدل iPhone 11 تک سیم‌ کارت ظرفیت 128 گیگابایت و رم 4 گیگابایت به همراه شارژر 20 وات اپل - ویتنام نات اکتیو", "IPhone.webp", false, "name", new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(288) });
+                values: new object[] { new Guid("c5bf1327-7e2e-436c-ae93-08dc21125efe"), new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1024), null, "گوشی موبایل اپل مدل iPhone 11 تک سیم‌ کارت ظرفیت 128 گیگابایت و رم 4 گیگابایت به همراه شارژر 20 وات اپل - ویتنام نات اکتیو", "IPhone.webp", false, "name", new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1041) });
 
             migrationBuilder.InsertData(
                 table: "ContactCustomers",
@@ -317,12 +328,12 @@ namespace Management_System.Migrations
             migrationBuilder.InsertData(
                 table: "Orders",
                 columns: new[] { "Id", "CreatedAt", "CustomerId", "DeletedAt", "IsDeleted", "UpdatedAt" },
-                values: new object[] { new Guid("a1669bec-e7ba-465c-a4e3-af2efafb9968"), new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(658), new Guid("57ba4c5e-98c1-4ddd-e316-08dc2111c64f"), null, false, new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(659) });
+                values: new object[] { new Guid("a1669bec-e7ba-465c-a4e3-af2efafb9968"), new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1314), new Guid("57ba4c5e-98c1-4ddd-e316-08dc2111c64f"), null, false, new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1315) });
 
             migrationBuilder.InsertData(
                 table: "OrderItems",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "Description", "IsDeleted", "OrderId", "ProductId", "Quantity", "UpdatedAt" },
-                values: new object[] { new Guid("e01aeca5-48ed-4037-9acd-7c398b6c1820"), new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(713), null, "good ast", false, new Guid("a1669bec-e7ba-465c-a4e3-af2efafb9968"), new Guid("c5bf1327-7e2e-436c-ae93-08dc21125efe"), 2, new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(715) });
+                values: new object[] { new Guid("e01aeca5-48ed-4037-9acd-7c398b6c1820"), new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1347), null, "good ast", false, new Guid("a1669bec-e7ba-465c-a4e3-af2efafb9968"), new Guid("c5bf1327-7e2e-436c-ae93-08dc21125efe"), 2, new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1348) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

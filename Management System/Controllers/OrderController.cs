@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Management_System.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class OrderController : Controller
     {
         #region Constructor

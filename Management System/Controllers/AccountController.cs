@@ -1,7 +1,5 @@
-﻿using Management_System.Models.Dtos;
-using Management_System.Services;
+﻿using Management_System.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Management_System.Controllers
 {
@@ -21,7 +19,7 @@ namespace Management_System.Controllers
         #endregion
 
         #region Add
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Register()
         {
             return View();
@@ -95,12 +93,22 @@ namespace Management_System.Controllers
         }
         #endregion
 
-        [Authorize]
+        #region AllUsers
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ShowAllUsers()
         {
             var users = await accountService.GetAllUsers();
             return View(users);
         }
+        #endregion
+
+        #region AccessDenied
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+        #endregion
 
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.Build.Framework;
 
 namespace Management_System.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CustomerController : Controller
     {
         #region Constructor

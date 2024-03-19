@@ -1,4 +1,5 @@
 ﻿using Management_System.Models.Dtos;
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace Management_System.Services
@@ -35,9 +36,28 @@ namespace Management_System.Services
         {
             var newAccount = mapper.Map<IdentityUser>(addAccountDto);
             var account = await userManager.CreateAsync(newAccount, addAccountDto.Password);
-            if (!account.Succeeded) return StatusResultDto.Failure;
+            if (account.Succeeded)
+            {
+                if (!string.IsNullOrEmpty(addAccountDto.RoleName))
+                {
+                    var resultRole = userManager.AddToRoleAsync(newAccount, addAccountDto.RoleName).GetAwaiter().GetResult();
+                    if (resultRole.Succeeded)
+                    {
+                        await userManager.AddClaimsAsync(newAccount, new Claim[]
+                        {
+                            new Claim("Name",newAccount.UserName!),
+                            new Claim("Role",addAccountDto.RoleName),
+                            new Claim("Email" ,newAccount.Email!),
 
-            return StatusResultDto.Success;
+                        });
+                    }
+                }
+                return StatusResultDto.Success;
+            }
+
+            return StatusResultDto.Failure;
+
+
         }
 
         public async Task<StatusResultDto> SignIn(LoginAccountDto loginAccountDto)

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Management_System.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20240318230618_init")]
+    [Migration("20240319125757_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -87,7 +87,7 @@ namespace Management_System.Migrations
                         new
                         {
                             Id = new Guid("eb371863-0915-481a-8873-9ebeddf8039a"),
-                            CreatedAt = new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(764),
+                            CreatedAt = new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1381),
                             Email = "test@gmail.com",
                             FirstName = "ali",
                             Gender = true,
@@ -97,7 +97,7 @@ namespace Management_System.Migrations
                             Mobile = " 09132884969",
                             Phone = "03137820975",
                             Role = "Admin",
-                            UpdatedAt = new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(766)
+                            UpdatedAt = new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1381)
                         });
                 });
 
@@ -174,12 +174,12 @@ namespace Management_System.Migrations
                             Id = new Guid("57ba4c5e-98c1-4ddd-e316-08dc2111c64f"),
                             Address = "isfahan",
                             City = "isfahan",
-                            CreatedAt = new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(609),
+                            CreatedAt = new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1270),
                             Description = "good person",
                             IsDeleted = false,
                             Name = "pouria",
                             Province = "isfahan",
-                            UpdatedAt = new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(611)
+                            UpdatedAt = new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1271)
                         });
                 });
 
@@ -214,10 +214,10 @@ namespace Management_System.Migrations
                         new
                         {
                             Id = new Guid("a1669bec-e7ba-465c-a4e3-af2efafb9968"),
-                            CreatedAt = new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(658),
+                            CreatedAt = new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1314),
                             CustomerId = new Guid("57ba4c5e-98c1-4ddd-e316-08dc2111c64f"),
                             IsDeleted = false,
-                            UpdatedAt = new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(659)
+                            UpdatedAt = new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1315)
                         });
                 });
 
@@ -263,13 +263,13 @@ namespace Management_System.Migrations
                         new
                         {
                             Id = new Guid("e01aeca5-48ed-4037-9acd-7c398b6c1820"),
-                            CreatedAt = new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(713),
+                            CreatedAt = new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1347),
                             Description = "good ast",
                             IsDeleted = false,
                             OrderId = new Guid("a1669bec-e7ba-465c-a4e3-af2efafb9968"),
                             ProductId = new Guid("c5bf1327-7e2e-436c-ae93-08dc21125efe"),
                             Quantity = 2,
-                            UpdatedAt = new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(715)
+                            UpdatedAt = new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1348)
                         });
                 });
 
@@ -309,12 +309,12 @@ namespace Management_System.Migrations
                         new
                         {
                             Id = new Guid("c5bf1327-7e2e-436c-ae93-08dc21125efe"),
-                            CreatedAt = new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(266),
+                            CreatedAt = new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1024),
                             Description = "گوشی موبایل اپل مدل iPhone 11 تک سیم‌ کارت ظرفیت 128 گیگابایت و رم 4 گیگابایت به همراه شارژر 20 وات اپل - ویتنام نات اکتیو",
                             ImageAddress = "IPhone.webp",
                             IsDeleted = false,
                             Name = "name",
-                            UpdatedAt = new DateTime(2024, 3, 19, 2, 36, 18, 263, DateTimeKind.Local).AddTicks(288)
+                            UpdatedAt = new DateTime(2024, 3, 19, 16, 27, 57, 348, DateTimeKind.Local).AddTicks(1041)
                         });
                 });
 
@@ -343,6 +343,20 @@ namespace Management_System.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "5e158bd69a2847b5a6e42073f21c9485",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "059f213c211f4865bdf2bd4986a68df3",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

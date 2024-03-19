@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Management_System.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class ContactController : Controller
     {
         #region Constructor
@@ -23,7 +23,6 @@ namespace Management_System.Controllers
 
         #endregion
 
-
         public async Task<IActionResult> Index()
         {
             var result = await contactService.GetAllAsync();
@@ -33,7 +32,6 @@ namespace Management_System.Controllers
 
             return View(contacts);
         }
-
 
         #region Create
         public async Task<IActionResult> AddContact(Guid? CustomerId)
@@ -71,7 +69,6 @@ namespace Management_System.Controllers
             return RedirectToAction("Index");
         }
         #endregion
-
 
         #region Detail & Edit
         public async Task<IActionResult> Detail(Guid Id)

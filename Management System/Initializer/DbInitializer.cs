@@ -1,4 +1,8 @@
 ﻿
+using Management_System.Models.Dtos;
+using System.Security.Claims;
+using System.Security.Principal;
+
 namespace Management_System.Initializer
 {
     public class DbInitializer : IDbinitializer
@@ -25,20 +29,17 @@ namespace Management_System.Initializer
             };
             var result = await userManager.CreateAsync(user, "Pouria@2024");
 
-            //if (result.Succeeded)
-            //{
-            //    await userManager.AddToRoleAsync(user, SD.Admin);
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, "Admin");
+                await userManager.AddClaimsAsync(user, new Claim[]
+                {
+                    new Claim("Name",user.UserName!),
+                    new Claim("Role","Admin"),
+                    new Claim("Email" ,user.Email!),
+                });
 
-            //    var temp1 = userManager.AddClaimsAsync(user, new Claim[]
-            //    {
-            //             new Claim(JwtClaimTypes.Name, user.FirstName + " " + user.LastName),
-            //             new Claim(JwtClaimTypes.GivenName, user.FirstName),
-            //             new Claim(JwtClaimTypes.FamilyName, user.LastName),
-            //             new Claim(JwtClaimTypes.Email, user.Email),
-            //             new Claim(JwtClaimTypes.Role, SD.Admin),
-            //    }).Result;
-
-            //}
+            }
         }
     }
 }

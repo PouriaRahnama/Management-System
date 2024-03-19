@@ -35,6 +35,10 @@
         [DataType(DataType.Password)]
         [Compare(nameof(Password), ErrorMessage = "رمز های وارد شده یکسان نیست")]
         public required string ConfrimPassword { get; set; }
+
+        [Display(Name = "نقش")]
+        [Required(ErrorMessage = "الزامی است .")]
+        public required string RoleName { get; set; }
     }
 
     public class LoginAccountDto

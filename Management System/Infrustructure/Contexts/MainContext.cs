@@ -15,7 +15,7 @@ namespace Management_System.Infrustructure.Contexts
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfig).Assembly);
             base.OnModelCreating(modelBuilder);
 
-            #region Seed Data Category
+            #region Seed Data
 
             modelBuilder.Entity<Product>().HasData(
             new Product()
@@ -86,6 +86,20 @@ namespace Management_System.Infrustructure.Contexts
                 CustomerId = Guid.Parse("57ba4c5e98c14ddde31608dc2111c64f"),
 
             });
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole()
+                {
+                    Id = "5e158bd69a2847b5a6e42073f21c9485",
+                    Name="Admin",
+                    NormalizedName="ADMIN"
+                },
+                new IdentityRole()
+                {
+                    Id = "059f213c211f4865bdf2bd4986a68df3",
+                    Name = "User",
+                    NormalizedName = "USER"
+                });
             #endregion
         }
         public DbSet<Product> Products { get; set; }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Management_System.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         #region MyRegion
