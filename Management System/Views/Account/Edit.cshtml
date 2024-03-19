@@ -32,7 +32,7 @@
                                     </div>
                                     <div class="mb-3 col-3">
                                         <label asp-for="RoleName" class="form-label">نقش کاربر</label>
-                                        @Html.DropDownList("RoleName", @ViewBag.Customers, "انتخاب نقش", new { @class = "form-select" })
+                                        @Html.DropDownList("RoleName", @ViewBag.Roles, "انتخاب نقش", htmlAttributes: new { @class = "form-select required", @data_val = "true", @data_val_required = "انتخاب الزامی است" })
                                         <span asp-validation-for="RoleName"></span>
                                     </div>
                                     <div>

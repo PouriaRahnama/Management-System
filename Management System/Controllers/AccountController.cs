@@ -25,7 +25,7 @@ namespace Management_System.Controllers
         public async Task<IActionResult> Register()
         {
             var roles = await accountService.GetAllRoles();
-            ViewBag.Customers = new SelectList(roles, "Name", "Name");
+            ViewBag.Roles = new SelectList(roles, "Name", "Name");
             return View();
         }
 
@@ -34,10 +34,10 @@ namespace Management_System.Controllers
         public async Task<IActionResult> Register(AddAccountDto addAccountDto)
         {
             var roles = await accountService.GetAllRoles();
-            ViewBag.Customers = new SelectList(roles, "Name", "Name");
+            ViewBag.Roles = new SelectList(roles, "Name", "Name");
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(addAccountDto);
             }
             var result = await accountService.Add(addAccountDto);
             if (result == StatusResultDto.Failure)
@@ -120,7 +120,7 @@ namespace Management_System.Controllers
         public async Task<IActionResult> Edit(string Id)
         {
             var roles = await accountService.GetAllRoles();
-            ViewBag.Customers = new SelectList(roles, "Name", "Name");
+            ViewBag.Roles = new SelectList(roles, "Name", "Name");
 
             var user = await accountService.GetUserById(Id);
             return View(user);
@@ -130,10 +130,10 @@ namespace Management_System.Controllers
         public async Task<IActionResult> Edit(EditAccountDto editAccountDto)
         {
             var roles = await accountService.GetAllRoles();
-            ViewBag.Customers = new SelectList(roles, "Name", "Name");
+            ViewBag.Roles = new SelectList(roles, "Name", "Name");
 
             if (!ModelState.IsValid)
-                return View();
+                return View(editAccountDto);
 
             var user = await accountService.Edit(editAccountDto);
             await Logout();
