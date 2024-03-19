@@ -1,13 +1,16 @@
 ﻿using Management_System.Models.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Management_System.Services
 {
     public interface IAccountService
     {
         Task<StatusResultDto> Add(AddAccountDto addAccountDto);
+        Task<StatusResultDto> Edit(EditAccountDto editAccountDto);
         Task<StatusResultDto> SignIn(LoginAccountDto loginAccountDto);
         StatusResultDto CheckSignIn(ClaimsPrincipal principal);
         Task SignOut();
@@ -153,6 +156,36 @@ namespace Management_System.Services
             }
 
             return false;
+        }
+
+        public async Task<StatusResultDto> Edit(EditAccountDto editAccountDto)
+        {
+            //First Fetch the User Details by UserId
+            var user = await userManager.FindByIdAsync(editAccountDto.Id);
+            // GetRolesAsync returns the list of user Roles
+            var userRoles = await userManager.GetRolesAsync(user);
+            // GetClaimsAsync retunrs the list of user Claims
+            var userClaims = await userManager.GetClaimsAsync(user);
+
+            user.Email = editAccountDto.Email;
+            user.UserName = editAccountDto.UserName;
+
+            // update user
+            await userManager.UpdateAsync(user);
+            // remove prev roles
+            await userManager.RemoveFromRolesAsync(user, userRoles);
+            // Add new roles
+            await userManager.AddToRoleAsync(user, editAccountDto.RoleName);
+            // remove claims
+            await userManager.RemoveClaimsAsync(user, userClaims);
+            // add claims
+            await userManager.AddClaimsAsync(user, new Claim[]
+            {
+            new Claim("Name", editAccountDto.UserName!),
+            new Claim("Role", editAccountDto.RoleName),
+            new Claim("Email", editAccountDto.Email!)
+            });
+            return StatusResultDto.Success;
         }
     }
 }

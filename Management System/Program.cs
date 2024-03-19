@@ -18,12 +18,6 @@ builder.Services.AddDbContextPool<MainContext>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MainContext>()
     .AddDefaultTokenProviders();
 
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy("Admin_Access",
-//        policy => policy.RequireClaim("AdminAccess"));
-//});
-
 builder.Services.AddScoped<IDbinitializer, DbInitializer>();
 var app = builder.Build();
 
@@ -44,10 +38,6 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-//app.MapControllerRoute(
-//        name: "default",
-//        pattern: "{controller=Account}/{action=Login}");
 
 app.MapControllerRoute(
         name: "default",

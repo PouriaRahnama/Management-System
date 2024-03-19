@@ -125,6 +125,21 @@ namespace Management_System.Controllers
             var user = await accountService.GetUserById(Id);
             return View(user);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditAccountDto editAccountDto)
+        {
+            var roles = await accountService.GetAllRoles();
+            ViewBag.Customers = new SelectList(roles, "Name", "Name");
+
+            if (!ModelState.IsValid)
+                return View();
+
+            var user = await accountService.Edit(editAccountDto);
+            await Logout();
+            return RedirectToAction(nameof(AccountController.Login));
+
+        }
         #endregion
 
         #region Delete
@@ -135,7 +150,5 @@ namespace Management_System.Controllers
             return RedirectToAction(nameof(AccountController.ShowAllUsers));
         }
         #endregion
-
-
     }
 }
