@@ -50,7 +50,7 @@
                                             <a asp-action="Edit" asp-route-Id="@item.Id" type="button" class="btn btn-success m-1">ویرایش</a>
                                         </td>
                                         <td>
-                                            <form method="post" asp-action="DeleteProduct" asp-route-Id="@item.Id">
+                                            <form method="post" asp-action="Delete" asp-route-Id="@item.Id" onclick=" return confirm('آیا از حذف این کاربر مطمئن هستید؟');">
                                                 <button type="submit" class="btn btn-danger m-1">حذف کاربر</button>
                                             </form>
                                         </td>

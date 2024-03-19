@@ -1,5 +1,7 @@
-﻿using Management_System.Services;
+﻿using Castle.DynamicProxy.Internal;
+using Management_System.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Management_System.Controllers
 {
@@ -20,8 +22,10 @@ namespace Management_System.Controllers
 
         #region Add
         [Authorize(Roles = "Admin")]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            var roles = await accountService.GetAllRoles();
+            ViewBag.Customers = new SelectList(roles, "Name", "Name");
             return View();
         }
 
@@ -29,6 +33,8 @@ namespace Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(AddAccountDto addAccountDto)
         {
+            var roles = await accountService.GetAllRoles();
+            ViewBag.Customers = new SelectList(roles, "Name", "Name");
             if (!ModelState.IsValid)
             {
                 return View();
@@ -109,6 +115,27 @@ namespace Management_System.Controllers
             return View();
         }
         #endregion
+
+        #region Edit
+        public async Task<IActionResult> Edit(string Id)
+        {
+            var roles = await accountService.GetAllRoles();
+            ViewBag.Customers = new SelectList(roles, "Name", "Name");
+
+            var user = await accountService.GetUserById(Id);
+            return View(user);
+        }
+        #endregion
+
+        #region Delete
+        [HttpPost]
+        public async Task<IActionResult> Delete(string Id)
+        {
+            await accountService.DeleteUser(Id);
+            return RedirectToAction(nameof(AccountController.ShowAllUsers));
+        }
+        #endregion
+
 
     }
 }

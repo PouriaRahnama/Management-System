@@ -1,5 +1,6 @@
 ﻿using Management_System.Models.Dtos;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Management_System.Services
@@ -11,6 +12,9 @@ namespace Management_System.Services
         StatusResultDto CheckSignIn(ClaimsPrincipal principal);
         Task SignOut();
         Task<IEnumerable<AccountDto>> GetAllUsers();
+        Task<IEnumerable<IdentityRole>> GetAllRoles();
+        Task<EditAccountDto> GetUserById(string Id);
+        Task<bool> DeleteUser(string Id);
     }
 
     [EasyDi(ServiceLifetime.Scoped)]
@@ -19,16 +23,18 @@ namespace Management_System.Services
     {
         #region Constructor
         private readonly UserManager<IdentityUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly IHttpContextAccessor context;
         private readonly IMapper mapper;
 
-        public AccountService(IMapper Mapper, UserManager<IdentityUser> UserManager, SignInManager<IdentityUser> SignInManager, IHttpContextAccessor Context)
+        public AccountService(IMapper Mapper, UserManager<IdentityUser> UserManager, SignInManager<IdentityUser> SignInManager, IHttpContextAccessor Context, RoleManager<IdentityRole> roleManager)
         {
             mapper = Mapper;
             userManager = UserManager;
             signInManager = SignInManager;
             context = Context;
+            this.roleManager = roleManager;
         }
         #endregion
 
@@ -82,8 +88,6 @@ namespace Management_System.Services
             await signInManager.SignOutAsync();
         }
 
-
-        [Display(Name = "لیست کلیه کاربران")]
         public async Task<IEnumerable<AccountDto>> GetAllUsers()
         {
             var userWithRoles = new List<AccountDto>();
@@ -105,6 +109,50 @@ namespace Management_System.Services
                 userWithRoles.Add(uInfo);
             }
             return userWithRoles;
+        }
+
+        public async Task<IEnumerable<IdentityRole>> GetAllRoles()
+        {
+            return await roleManager.Roles.ToListAsync();
+        }
+
+        public async Task<EditAccountDto> GetUserById(string Id)
+        {
+            var user = await userManager.FindByIdAsync(Id);
+            var roles = await userManager.GetRolesAsync(user);
+            EditAccountDto editUser = new EditAccountDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                RoleName = null,
+                UserName = user.UserName
+            };
+            foreach (var role in roles)
+            {
+                editUser.RoleName = role + ",";
+            }
+
+            return editUser;
+        }
+
+        public async Task<bool> DeleteUser(string Id)
+        {
+            var user = await userManager.FindByIdAsync(Id);
+            var roles = await userManager.GetRolesAsync(user);
+            var cliams = await userManager.GetClaimsAsync(user);
+
+            if (user != null)
+            {
+                var result = await userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    await userManager.RemoveFromRolesAsync(user, roles);
+                    await userManager.RemoveClaimsAsync(user, cliams);
+                }
+                return true;
+            }
+
+            return false;
         }
     }
 }

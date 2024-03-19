@@ -15,6 +15,7 @@
         public string? RoleName { get; set; }
 
     }
+
     public class AddAccountDto
     {
         [Required(ErrorMessage = "الزامی است .")]
@@ -35,6 +36,24 @@
         [DataType(DataType.Password)]
         [Compare(nameof(Password), ErrorMessage = "رمز های وارد شده یکسان نیست")]
         public required string ConfrimPassword { get; set; }
+
+        [Display(Name = "نقش")]
+        [Required(ErrorMessage = "الزامی است .")]
+        public required string RoleName { get; set; }
+    }
+    public class EditAccountDto
+    {
+        [Required(ErrorMessage = "الزامی است .")]
+        [Display(Name = "شناسه کاربر ")]
+        public required string Id { get; set; }
+
+        [Required(ErrorMessage = "الزامی است .")]
+        [Display(Name = "نام کاربری")]
+        public required string UserName { get; set; }
+
+        [Required(ErrorMessage = "الزامی است .")]
+        [Display(Name = "ایمیل")]
+        public required string Email { get; set; }
 
         [Display(Name = "نقش")]
         [Required(ErrorMessage = "الزامی است .")]
