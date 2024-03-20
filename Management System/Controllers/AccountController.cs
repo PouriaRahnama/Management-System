@@ -1,6 +1,5 @@
 ﻿using Castle.DynamicProxy.Internal;
-using Management_System.Services;
-using Microsoft.AspNetCore.Authorization;
+
 using Microsoft.AspNetCore.Identity;
 
 namespace Management_System.Controllers

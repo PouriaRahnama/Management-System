@@ -1,11 +1,4 @@
-﻿using Management_System.Models.Dtos;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Security.Claims;
-using System.Security.Principal;
-
-namespace Management_System.Services
+﻿namespace Management_System.Services
 {
     public interface IAccountService
     {

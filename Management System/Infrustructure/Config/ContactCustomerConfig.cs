@@ -1,6 +1,4 @@
-﻿using Management_System.Models.Entities;
-
-namespace Management_System.Infrustructure.Config
+﻿namespace Management_System.Infrustructure.Config
 {
     public class ContactCustomerConfig : IEntityTypeConfiguration<ContactCustomer>
     {

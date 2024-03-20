@@ -1,7 +1,3 @@
-using Management_System.Infrustructure.Contexts;
-using Management_System.Models.Dtos;
-using Management_System.Models.Entities;
-
 namespace Management_System.Services
 {
     public interface IOrderService

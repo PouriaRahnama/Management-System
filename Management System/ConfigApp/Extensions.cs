@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Text.RegularExpressions;
-
-namespace Management_System.ConfigApp
+﻿namespace Management_System.ConfigApp
 {
     public static class Extensions
     {

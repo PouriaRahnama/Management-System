@@ -10,8 +10,14 @@ global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Rendering;
-
-
 global using Management_System.Models.Dtos;
-
-
+global using System.Data;
+global using System.Security.Claims;
+global using System.Security.Principal;
+global using Management_System.Infrustructure.Contexts;
+global using Management_System.Models.Entities;
+global using Management_System.Services;
+global using Microsoft.AspNetCore.Authorization;
+global using System.Globalization;
+global using System.Text.RegularExpressions;
+global using Management_System.Infrustructure.Config;

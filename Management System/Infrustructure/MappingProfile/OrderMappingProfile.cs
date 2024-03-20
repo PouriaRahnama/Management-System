@@ -1,7 +1,4 @@
-﻿using Management_System.Models.Dtos;
-using Management_System.Models.Entities;
-
-namespace Management_System.Infrustructure.MappingProfile
+﻿namespace Management_System.Infrustructure.MappingProfile
 {
     public class OrderMappingProfile : Profile
     {

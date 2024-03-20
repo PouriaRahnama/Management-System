@@ -1,6 +1,4 @@
-﻿using Management_System.Models.Dtos;
-
-namespace Management_System.Infrustructure.MappingProfile
+﻿namespace Management_System.Infrustructure.MappingProfile
 {
     public class AccountMappingProfile : Profile
     {

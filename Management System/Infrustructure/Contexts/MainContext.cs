@@ -1,7 +1,4 @@
-﻿using Management_System.Infrustructure.Config;
-using Management_System.Models.Entities;
-
-namespace Management_System.Infrustructure.Contexts
+﻿namespace Management_System.Infrustructure.Contexts
 {
     public class MainContext : IdentityDbContext
     {
