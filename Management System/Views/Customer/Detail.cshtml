@@ -117,9 +117,9 @@
                 </div>
                 <div class="card-body" style="text-align:right">
                     <form method="post" asp-action="AddContact" asp-route-CustomerId="@Model.Id">
-                        @Html.DropDownList("Contacts", @ViewBag.Contacts,"انتخاب", new { @class = "form-select", @style = "width:300px" })
-                        <br/>
-                        <input type="submit" class="btn btn-primary m-1" value="افزودن"/>
+                        @Html.DropDownList("Contacts", @ViewBag.Contacts, "انتخاب", htmlAttributes: new { @class = "form-select required", @style = "width:300px ", @data_val = "true", @data_val_required = "انتخاب الزامی است" })
+                        <br />
+                        <input type="submit" class="btn btn-primary m-1" value="افزودن" />
                     </form>
                 </div>
             </div>
@@ -146,24 +146,24 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Orders)
-                            {
-                                <tr>
+                                            {
+                            <tr>
 
-                                    <td>
-                                        @item.ProductName
-                                    </td>
-                                    <td>
-                                        @item.ItemDescription
-                                    </td>
-                                    <td>
-                                        @item.CreateAt.ToPersian()
-                                    </td>
-                                    <td>
-                                        @item.ExpireAt.ToPersian()
-                                    </td>
-                          
-                                </tr>
-                            }
+                                <td>
+                                    @item.ProductName
+                                </td>
+                                <td>
+                                    @item.ItemDescription
+                                </td>
+                                <td>
+                                    @item.CreateAt.ToPersian()
+                                </td>
+                                <td>
+                                    @item.ExpireAt.ToPersian()
+                                </td>
+
+                            </tr>
+                                            }
                         </tbody>
                     </table>
                 </div>
