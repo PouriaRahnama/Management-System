@@ -4,7 +4,6 @@
     public class ContactController : Controller
     {
         #region Constructor
-
         private readonly ILogger<ContactController> logger;
         private IContactService contactService;
         private ICustomerService customerService;
@@ -15,9 +14,9 @@
             contactService = ContactService;
             customerService = CustomerService;
         }
-
         #endregion
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var result = await contactService.GetAllAsync();
@@ -29,13 +28,14 @@
         }
 
         #region Create
+        [HttpGet]
         public async Task<IActionResult> AddContact(Guid? CustomerId)
         {
             return View();
         }
 
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddContact(Guid Id, AddContactDto addContactDto, string GenderName)
         {
 
@@ -66,6 +66,7 @@
         #endregion
 
         #region Detail & Edit
+        [HttpGet]
         public async Task<IActionResult> Detail(Guid Id)
         {
             var result = await contactService.GetByIdAsync(Id);
@@ -76,6 +77,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid Id, EditContactDto editContactDto, string GenderName)
         {
             try
@@ -87,16 +89,13 @@
             {
                 logger.LogError(ex.Message);
             }
-
-
             return RedirectToAction("Index");
         }
-
         #endregion
 
         #region Delete
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid Id)
         {
             try
@@ -110,7 +109,6 @@
 
             return RedirectToAction("Index");
         }
-
         #endregion
     }
 }
