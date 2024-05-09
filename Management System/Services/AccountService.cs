@@ -153,32 +153,34 @@
 
         public async Task<StatusResultDto> Edit(EditAccountDto editAccountDto)
         {
-            //First Fetch the User Details by UserId
             var user = await userManager.FindByIdAsync(editAccountDto.Id);
-            // GetRolesAsync returns the list of user Roles
             var userRoles = await userManager.GetRolesAsync(user);
-            // GetClaimsAsync retunrs the list of user Claims
             var userClaims = await userManager.GetClaimsAsync(user);
 
             user.Email = editAccountDto.Email;
             user.UserName = editAccountDto.UserName;
 
-            // update user
-            await userManager.UpdateAsync(user);
-            // remove prev roles
-            await userManager.RemoveFromRolesAsync(user, userRoles);
-            // Add new roles
-            await userManager.AddToRoleAsync(user, editAccountDto.RoleName);
-            // remove claims
-            await userManager.RemoveClaimsAsync(user, userClaims);
-            // add claims
-            await userManager.AddClaimsAsync(user, new Claim[]
+            var resultUpdate = await userManager.UpdateAsync(user);
+
+            if (resultUpdate.Succeeded)
             {
-            new Claim("Name", editAccountDto.UserName!),
-            new Claim("Role", editAccountDto.RoleName),
-            new Claim("Email", editAccountDto.Email!)
-            });
-            return StatusResultDto.Success;
+                var resultRemoveRoles = await userManager.RemoveFromRolesAsync(user, userRoles);
+                if (resultRemoveRoles.Succeeded)
+                    await userManager.AddToRoleAsync(user, editAccountDto.RoleName);
+
+                var resultRemoveClaims = await userManager.RemoveClaimsAsync(user, userClaims);
+                if (resultRemoveClaims.Succeeded)
+                    await userManager.AddClaimsAsync(user, new Claim[]
+                    {
+                    new Claim("Name", editAccountDto.UserName!),
+                    new Claim("Role", editAccountDto.RoleName),
+                    new Claim("Email", editAccountDto.Email!)
+                    });
+
+                return StatusResultDto.Success;
+            }
+
+            return StatusResultDto.Failure;
         }
     }
 }
