@@ -1,13 +1,9 @@
-﻿using Castle.DynamicProxy.Internal;
-
-using Microsoft.AspNetCore.Identity;
-
-namespace Management_System.Controllers
+﻿namespace Management_System.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
         #region Constructor
-
         private readonly ILogger<AccountController> logger;
         private IAccountService accountService;
 
@@ -16,11 +12,11 @@ namespace Management_System.Controllers
             logger = Logger;
             accountService = AccountService;
         }
-
         #endregion
 
         #region Add
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Register()
         {
             var roles = await accountService.GetAllRoles();
@@ -35,9 +31,8 @@ namespace Management_System.Controllers
             var roles = await accountService.GetAllRoles();
             ViewBag.Roles = new SelectList(roles, "Name", "Name");
             if (!ModelState.IsValid)
-            {
                 return View(addAccountDto);
-            }
+
             var result = await accountService.Add(addAccountDto);
             if (result == StatusResultDto.Failure)
             {
@@ -51,6 +46,8 @@ namespace Management_System.Controllers
         #endregion
 
         #region Login
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             var result = accountService.CheckSignIn(User);
@@ -63,12 +60,10 @@ namespace Management_System.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginAccountDto loginAccountDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+            if (!ModelState.IsValid) return View();
             var result = accountService.CheckSignIn(User);
             if (result == StatusResultDto.NotEntred)
             {
@@ -85,7 +80,6 @@ namespace Management_System.Controllers
                     return View();
                 }
             }
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -98,8 +92,8 @@ namespace Management_System.Controllers
         }
         #endregion
 
-        #region AllUsers
-        [Authorize(Roles = "Admin")]
+        #region AllUsers  
+        [HttpGet]
         public async Task<IActionResult> ShowAllUsers()
         {
             var users = await accountService.GetAllUsers();
@@ -116,33 +110,31 @@ namespace Management_System.Controllers
         #endregion
 
         #region Edit
+        [HttpGet]
         public async Task<IActionResult> Edit(string Id)
         {
             var roles = await accountService.GetAllRoles();
             ViewBag.Roles = new SelectList(roles, "Name", "Name");
-
             var user = await accountService.GetUserById(Id);
             return View(user);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditAccountDto editAccountDto)
         {
             var roles = await accountService.GetAllRoles();
             ViewBag.Roles = new SelectList(roles, "Name", "Name");
-
-            if (!ModelState.IsValid)
-                return View(editAccountDto);
-
+            if (!ModelState.IsValid) return View(editAccountDto);
             var user = await accountService.Edit(editAccountDto);
             await Logout();
             return RedirectToAction(nameof(AccountController.Login));
-
         }
         #endregion
 
         #region Delete
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string Id)
         {
             await accountService.DeleteUser(Id);
