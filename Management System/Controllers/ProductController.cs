@@ -4,7 +4,6 @@
     public class ProductController : Controller
     {
         #region MyRegion
-
         private readonly ILogger<ProductController> logger;
         private IProductService productService;
 
@@ -13,10 +12,10 @@
             logger = Logger;
             productService = ProductService;
         }
-
         #endregion
 
         #region Get
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var result = await productService.GetAllProductsAsync(new SearchFilterProductDto());
@@ -27,6 +26,7 @@
             return View(products);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Detail(Guid Id)
         {
             var result = await productService.GetProductByIdAsync(Id);
@@ -35,17 +35,17 @@
             ProductDto product = result;
             return View(product);
         }
-
         #endregion
 
         #region Create
-
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddProductDto addProductDto)
         {
             try
@@ -61,12 +61,11 @@
 
             return RedirectToAction("Index");
         }
-
         #endregion
 
         #region Delete
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteProduct(Guid Id)
         {
             try
@@ -80,11 +79,10 @@
 
             return RedirectToAction("Index");
         }
-
-
         #endregion
 
         #region Edit
+        [HttpGet]
         public async Task<IActionResult> Edit(Guid Id)
         {
             var result = await productService.GetProductByIdAsync(Id);
@@ -101,6 +99,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProduct(Guid Id, EditProductDto editProductDto)
         {
             try
@@ -114,7 +113,6 @@
             }
             return RedirectToAction("Index");
         }
-
         #endregion
     }
 }
