@@ -2,7 +2,7 @@
 {
     public class HomeController : Controller
     {
-
+        [HttpGet]
         public IActionResult Index()
         {
             string? myData = TempData["SuccessMessage"] as string;

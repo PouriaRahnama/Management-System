@@ -4,7 +4,6 @@
     public class OrderController : Controller
     {
         #region Constructor
-
         private readonly IOrderService orderService;
         private ILogger<OrderController> logger;
         private readonly IProductService productService;
@@ -17,44 +16,37 @@
             productService = ProductService;
             customerService = CustomerService;
         }
-
         #endregion
 
         #region Index
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var result = await orderService.GetAllOrdersAsync();
             return View(result);
         }
-
         #endregion
 
         #region Create
-
-
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             #region Get All Customer
             var resultCustomers = await customerService.GetAllAsync();
-
             List<CustomerDto> customers = resultCustomers.ToList();
             ViewBag.Customers = new SelectList(customers, "Id", "Name");
-
             #endregion
 
             #region Get All Product
             var resultProd = await productService.GetAllProductsAsync();
-
             var products = resultProd.ToList();
             ViewBag.Products = new SelectList(products, "Id", "Name");
-
-
             #endregion
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddOrderDto addOrderDto, AddItemDto itemDto, Guid Customers, Guid Products)
         {
             #region Get All Customer
@@ -94,12 +86,10 @@
 
             return RedirectToAction("Index");
         }
-
-
         #endregion
 
         #region Detail
-
+        [HttpGet]
         public async Task<IActionResult> Detail(Guid Id)
         {
             var resultProd = await productService.GetAllProductsAsync();
@@ -122,12 +112,11 @@
 
             return View(order);
         }
-
         #endregion
 
         #region Delete Order
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid Id)
         {
             try
@@ -141,12 +130,11 @@
 
             return RedirectToAction("Index");
         }
-
         #endregion
 
         #region Delete Item
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteItem(Guid OrderId, Guid ItemId)
         {
             try
@@ -162,6 +150,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DiminishItem(Guid OrderId, Guid ItemId)
         {
             try
@@ -175,9 +164,10 @@
 
             return RedirectToAction("Detail", new { Id = OrderId });
         }
-
         #endregion
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(Guid OrderId, Guid Products)
         {
             AddItemDto item = new AddItemDto()
@@ -201,6 +191,8 @@
             return RedirectToAction("Detail", new { Id = OrderId });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateCountItem(Guid OrderId, Guid ProductId)
         {
             AddItemDto item = new AddItemDto()
