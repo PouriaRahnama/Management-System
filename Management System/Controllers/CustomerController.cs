@@ -1,15 +1,15 @@
-﻿namespace Management_System.Controllers
+﻿using Management_System.Models.Entities;
+
+namespace Management_System.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class CustomerController : Controller
     {
         #region Constructor
-
         private readonly ILogger<CustomerController> logger;
         private ICustomerService customerService;
         private IOrderService orderService;
         private IContactService contactService;
-
 
         public CustomerController(ILogger<CustomerController> Logger, ICustomerService CustomerService, IOrderService OrderService, IContactService ContactService)
         {
@@ -18,10 +18,10 @@
             orderService = OrderService;
             contactService = ContactService;
         }
-
         #endregion
 
         #region Get
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var result = await customerService.GetAllAsync();
@@ -31,6 +31,8 @@
 
             return View(Customers.ToList());
         }
+
+        [HttpGet]
         public async Task<IActionResult> Detail(Guid Id)
         {
             var result = await customerService.GetByIdAsync(Id);
@@ -63,23 +65,23 @@
                 LastName = "جدید"
             });
 
-
+ 
             ViewBag.Contacts = new SelectList(contacts, "Id", "Name");
             Customer.Contacts = (List<ContactDto>?)items;
 
             return View(Customer);
         }
-
         #endregion
 
         #region Create
-
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddCustomerDto customerDto)
         {
             if (!ModelState.IsValid)
@@ -98,11 +100,11 @@
 
             return RedirectToAction("Detail", new { customer.Id });
         }
-
         #endregion
 
         #region Delete
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid Id)
         {
             try
@@ -117,17 +119,18 @@
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteContactCustomer(Guid CustomerId, Guid ContactId)
         {
             await customerService.DeleteContactCustomerAsync(CustomerId, ContactId);
             return RedirectToAction("Detail", new { Id = CustomerId });
         }
-
         #endregion
 
         #region Edit
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditCustomer(Guid Id, EditCustomerDto editCustomerDto)
         {
             try
@@ -141,24 +144,22 @@
             }
             return RedirectToAction("Detail", new { Id });
         }
-
         #endregion
 
         #region Add Contact
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddContact(string Contacts, Guid CustomerId)
-        {
-            Guid contact = Guid.Parse(Contacts);
-            if (contact == Guid.Empty)
-                return RedirectToAction("AddContact", "Contact", new { CustomerId });
+        {         
+            if (Contacts == null)
+                return RedirectToAction("AddContact", "Contact", new { CustomerId });    
             else
             {
+                Guid contact = Guid.Parse(Contacts);
                 await customerService.AddCustomerContactAsync(contact, CustomerId);
                 return RedirectToAction("Detail", new { Id = CustomerId });
             }
         }
-
         #endregion
-
     }
 }
